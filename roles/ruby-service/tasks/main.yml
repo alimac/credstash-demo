@@ -1,0 +1,4 @@
+
+- name: hello from ec2 instance
+  command: >
+    whoami

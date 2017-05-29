@@ -1,8 +1,21 @@
 ---
 
-- name: run demo
+- name: set up credstash and launch ec2 instance
   hosts: localhost
   gather_facts: no
 
   roles:
     - credstash-demo
+
+- name: install ruby service on ec2 instance
+  hosts: credstash-demo
+  remote_user: ubuntu
+  gather_facts: no
+
+  pre_tasks:
+    - name: install python-minimal
+      raw: sudo bash -c "test -e /usr/bin/python || (apt -qqy update && apt install -qy python-minimal)"
+      changed_when: no
+
+  roles:
+    - ruby-service
