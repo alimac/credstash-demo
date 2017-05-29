@@ -14,13 +14,16 @@
   changed_when: no
   register: list_aliases
 
-- name: set kms key fact
+- name: get kms key
   when: list_aliases.stdout != 'null'
-  set_fact:
-    kms_key:
-      arn: "{{ item.AliasArn }}"
-      alias: "{{ item.AliasName }}"
-  with_items: "{{ list_aliases.stdout | from_json }}"
+  block:
+    - name: set kms key fact
+      when: list_aliases.stdout != 'null'
+      set_fact:
+        kms_key:
+          arn: "arn:aws:kms:{{ region }}:{{ aws_account_id.stdout }}:key/{{ item.TargetKeyId }}"
+          alias: "{{ item.AliasName }}"
+      with_items: "{{ list_aliases.stdout | from_json }}"
 
 - name: create kms key
   when: list_aliases.stdout == 'null'

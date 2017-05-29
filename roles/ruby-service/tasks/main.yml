@@ -1,4 +1,17 @@
 
-- name: hello from ec2 instance
-  command: >
-    whoami
+- name: install packages
+  become: yes
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - build-essential
+    - libssl-dev
+    - libffi-dev
+    - python-dev
+    - python-pip
+    - ruby
+
+- name: install credstash
+  become: yes
+  pip:
+    name: credstash
