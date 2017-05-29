@@ -7,6 +7,7 @@ ec2_keypair: credstash-demo
 kms_key_alias: alias/credstash
 credstash_table: credential-store
 instance_profile: credstash-demo
+ec2_security_group: credstash-demo
 
 credstash_secrets:
   - name: secret

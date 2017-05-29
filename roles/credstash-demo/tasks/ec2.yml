@@ -1,0 +1,44 @@
+
+- name: look up external ip address
+  command: >
+    curl ifconfig.io
+      --silent
+  register: ifconfig_io
+  changed_when: no
+
+- name: create security group
+  ec2_group:
+    name: "{{ ec2_security_group }}"
+    description: "EC2 security group for {{ ec2_security_group }} demo"
+    region: "{{ region }}"
+    profile: "{{ profile }}"
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: "{{ ifconfig_io.stdout }}/32"
+
+- name: get most recent ubuntu ami
+  ec2_ami_find:
+    owner: 099720109477
+    name: "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"
+    region: "{{ region }}"
+    profile: "{{ profile }}"
+    no_result_action: fail
+    sort: creationDate
+    sort_order: descending
+  register: ami_find
+
+- name: launch instance
+  ec2:
+    key_name: "{{ ec2_keypair }}"
+    instance_type: t2.nano
+    image: "{{ ami_find.results[0].ami_id }}"
+    wait: yes
+    group: "{{ ec2_security_group }}"
+    count: 1
+    assign_public_ip: yes
+    instance_profile_name: "{{ instance_profile }}"
+    region: "{{ region }}"
+    profile: "{{ profile }}"
+  register: instance

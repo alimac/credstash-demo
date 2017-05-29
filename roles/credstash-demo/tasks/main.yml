@@ -19,3 +19,8 @@
   include: credstash.yml
   tags:
     - credstash
+
+- name: ec2 instance
+  include: ec2.yml
+  tags:
+    - ec2
