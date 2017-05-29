@@ -1,0 +1,17 @@
+---
+
+region: "{{ lookup('ENV','AWS_DEFAULT_REGION') }}"
+profile: "{{ lookup('ENV','AWS_DEFAULT_PROFILE') }}"
+
+ec2_keypair: credstash-demo
+kms_key_alias: alias/credstash
+credstash_table: credential-store
+instance_profile: credstash-demo
+
+credstash_secrets:
+  - name: secret
+    value: password123
+    env: demo
+  - name: production_secret
+    value: 09hj8Sn834jkc0Df
+    env: prod

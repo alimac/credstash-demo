@@ -1,0 +1,49 @@
+
+- name: get aws account id
+  command: >
+    aws sts get-caller-identity
+      --query Account
+      --output text
+  register: aws_account_id
+  changed_when: no
+
+- name: check if key alias exists
+  command: >
+    aws kms list-aliases
+      --query 'Aliases[?AliasName==`{{ kms_key_alias }}`]'
+  changed_when: no
+  register: list_aliases
+
+- name: set kms key fact
+  when: list_aliases.stdout != 'null'
+  set_fact:
+    kms_key:
+      arn: "{{ item.AliasArn }}"
+      alias: "{{ item.AliasName }}"
+  with_items: "{{ list_aliases.stdout | from_json }}"
+
+- name: create kms key
+  when: list_aliases.stdout == 'null'
+  block:
+    - name: create key
+      command: >
+        aws kms create-key
+          --policy "{{ credstash_demo_key_policy | to json }}"
+          -- description "Credstash demo"
+      register: create_key
+
+    - name: convert output to json
+      set_fact:
+        create_key_json: "{{ create_key | from_json }}"
+
+    - name: create alias
+      command: >
+        aws kms create-alias
+          --alias-name "{{ kms_key_alias }}"
+          --target-key-id "{{ create_key_json.KeyMetadata.KeyId }}"
+
+    - name: set kms key fact
+      set_fact:
+        kms_key:
+          arn: "{{ create_key_json.KeyMetadata.Arn }}"
+          alias: "{{ kms_key_alias }}"

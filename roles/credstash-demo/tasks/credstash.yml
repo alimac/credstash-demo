@@ -1,0 +1,14 @@
+
+- name: install credstash
+  pip:
+    name: credstash
+
+- name: set up credstash
+  command: >
+    credstash -t {{ credstash_table }} setup
+
+- name: put secrets in credstash
+  command: >
+    credstash put {{ item.name }} {{ item.value }} env={{ item.env }}
+  with_items: "{{ credstash_secrets }}"
+  ignore_errors: yes

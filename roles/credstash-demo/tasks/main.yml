@@ -1,0 +1,21 @@
+
+- name: ec2 keypair
+  include: keypair.yml
+  tags:
+    - keypair
+
+- name: kms key
+  include: kms.yml
+  tags:
+    - kms
+
+- name: instance profile
+  include: profile.yml
+  tags:
+    - role
+    - profile
+
+- name: credstash
+  include: credstash.yml
+  tags:
+    - credstash

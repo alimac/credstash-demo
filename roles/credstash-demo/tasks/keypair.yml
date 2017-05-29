@@ -1,0 +1,14 @@
+
+- name: create ec2 keypair
+  ec2_key:
+    name: "{{ ec2_keypair }}"
+    region: "{{ region }}"
+    profile: "{{ profile }}"
+  register: ec2_key
+
+- name: save private key
+  template:
+    src: templates/private_key.pem.j2
+    dest: "~/.ssh/{{ ec2_key.key.name }}.pem"
+    mode: 0400
+  when: ec2_key.changed
