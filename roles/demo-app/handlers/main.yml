@@ -1,0 +1,9 @@
+
+- name: restart demo-app
+  become: yes
+  systemd:
+    name: demo-app
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+    masked: no

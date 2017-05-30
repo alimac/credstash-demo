@@ -1,0 +1,42 @@
+
+- name: install packages
+  become: yes
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - build-essential
+    - libssl-dev
+    - libffi-dev
+    - python-dev
+    - python-pip
+    - ruby
+
+- name: install credstash
+  become: yes
+  pip:
+    name: credstash
+
+- name: copy demo-app.rb
+  copy:
+    src: files/demo-app.rb
+    dest: "{{ app_install_path }}"
+    mode: 0700
+  notify:
+    - restart demo-app
+
+- name: copy demo-app service
+  become: yes
+  template:
+    src: templates/demo-app.service.j2
+    dest: "{{ app_service_path }}"
+  notify:
+    - restart demo-app
+
+- name: start/enable demo-app
+  become: yes
+  systemd:
+    name: demo-app
+    state: started
+    enabled: yes
+    daemon_reload: yes
+    masked: no

@@ -1,0 +1,13 @@
+# ==> {{ app_service_path }} <==
+[Unit]
+Description = Ruby service (ruby-service)
+
+[Service]
+ExecStart = {{ app_install_path }}
+KillSignal = SIGQUIT
+ExecReload = /bin/kill -HUP $MAINPID
+User = ubuntu
+Environment = SECRET={{ lookup('credstash','secret', env='demo') }}
+
+[Install]
+WantedBy = multi-user.target

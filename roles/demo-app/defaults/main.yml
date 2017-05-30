@@ -1,0 +1,3 @@
+
+app_install_path: /home/ubuntu/demo-app.rb
+app_service_path: /etc/systemd/system/demo-app.service
