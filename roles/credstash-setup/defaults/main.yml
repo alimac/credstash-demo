@@ -10,8 +10,11 @@ instance_profile: credstash-demo
 ec2_security_group: credstash-demo
 
 credstash_secrets:
-  - name: secret
-    value: password123
+  - name: demo_secret_1
+    value: aerobic-uneven-genius
+    env: demo
+  - name: demo_secret_2
+    value: revving-fissure-rage
     env: demo
   - name: production_secret
     value: 09hj8Sn834jkc0Df

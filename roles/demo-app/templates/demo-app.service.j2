@@ -7,7 +7,8 @@ ExecStart = {{ app_install_path }}
 KillSignal = SIGQUIT
 ExecReload = /bin/kill -HUP $MAINPID
 User = ubuntu
-Environment = SECRET={{ lookup('credstash','secret', env='demo') }}
+Environment = DEMO_SECRET_1={{ lookup('credstash','demo_secret_1', env='demo') }}
+Environment = AWS_REGION={{ ansible_ec2_placement_region }}
 
 [Install]
 WantedBy = multi-user.target

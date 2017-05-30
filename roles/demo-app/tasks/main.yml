@@ -1,4 +1,8 @@
 
+
+- name: get instance metadata
+  ec2_facts:
+
 - name: install packages
   become: yes
   apt:
@@ -10,6 +14,12 @@
     - python-dev
     - python-pip
     - ruby
+
+- name: install gems
+  gem:
+    name: "{{ item }}"
+  with_items:
+    - rcredstash
 
 - name: install credstash
   become: yes

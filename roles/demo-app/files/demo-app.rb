@@ -2,11 +2,13 @@
 
 require 'fileutils'
 require 'syslog/logger'
+require 'rcredstash'
 
 def show_secret
-  secret = ENV.fetch('SECRET')
+  demo_secret_1 = ENV.fetch('DEMO_SECRET_1')
+  demo_secret_2 = CredStash.get('demo_secret_2', context: { 'env' => 'demo' })
 
-  Time.now.to_s + " secret=#{secret}"
+  Time.now.to_s + " demo_secret_1=#{demo_secret_1}, demo_secret_2=#{demo_secret_2}"
 end
 
 def graceful_exit
