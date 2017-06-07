@@ -40,7 +40,7 @@
 - name: launch ec2 instance
   ec2:
     key_name: "{{ ec2_keypair }}"
-    instance_type: t2.nano
+    instance_type: "{{ ec2_instance_type }}"
     image: "{{ ami_find.results[0].ami_id }}"
     wait: yes
     vpc_subnet_id: "{{ vpc_facts.subnets[0].id }}"

@@ -4,6 +4,10 @@
   hosts: localhost
   gather_facts: no
 
+  vars:
+#    ec2_instance_type:
+#    ec2_keypair:
+
   roles:
     - credstash-setup
 
