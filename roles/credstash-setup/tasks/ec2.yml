@@ -1,12 +1,12 @@
 
-- name: look up external ip address
+- name: look up external ip address of localhost
   command: >
     curl ifconfig.io
       --silent
   register: ifconfig_io
   changed_when: no
 
-- name: create security group
+- name: create security group that allows localhost to ssh to instance
   ec2_group:
     name: "{{ ec2_security_group }}"
     description: "EC2 security group for {{ ec2_security_group }} demo"
@@ -21,7 +21,7 @@
       - proto: all
         cidr_ip: 0.0.0.0/0
 
-- name: get most recent ubuntu ami
+- name: find most recent ubuntu ami
   ec2_ami_find:
     owner: 099720109477
     name: "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"
@@ -32,7 +32,8 @@
     sort_order: descending
   register: ami_find
 
-- ec2_vpc_subnet_facts:
+- name: gather facts about default vpc
+  ec2_vpc_subnet_facts:
     region: "{{ region }}"
     profile: "{{ profile }}"
   register: vpc_facts
