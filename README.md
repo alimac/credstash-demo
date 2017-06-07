@@ -28,7 +28,7 @@ Your AWS credentials should have access to AWS DynamoDB and KMS.
 
 ## What it does
 
-The demo consists of a playbook (`credstash-demo.yml`), which makes use of two Ansible roles (`credstash-setup` and `demo-app`).
+The demo consists of a playbook (`credstash-demo.yml`), which makes use of two Ansible roles (`credstash-setup` and `ruby-app`).
 
 ### About credstash-setup role
 
@@ -39,11 +39,11 @@ This role performs the following tasks:
 1. Creates an IAM role and instance profile that allows an EC2 instance to use the encryption key to decrypt items
 1. Installs `credstash` on your localhost and runs `credstash setup` to create the DynamoDB table where secrets will be stored
 1. Uploads sample secrets to the Credstash DynamoDB table
-1. Provisions an EC2 instance which will be used by the `demo-app` role
+1. Provisions an EC2 instance which will be used by the `ruby-app` role
 
-### About demo-app role
+### About ruby-app role
 
-This role installs a small Ruby app (`demo-app.rb`) on the EC2 instance, to demonstrate how Credstash secrets are used.
+This role installs a small Ruby app (`ruby-app.rb`) on the EC2 instance, to demonstrate how Credstash secrets are used.
 
 The app uses two secrets, and outputs their values to `/var/log/syslog`.
 

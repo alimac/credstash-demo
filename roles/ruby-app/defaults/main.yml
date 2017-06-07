@@ -1,0 +1,3 @@
+
+app_install_path: /home/ubuntu/ruby-app.rb
+app_service_path: /etc/systemd/system/ruby-app.service

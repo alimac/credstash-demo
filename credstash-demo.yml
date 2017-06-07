@@ -11,7 +11,7 @@
   roles:
     - credstash-setup
 
-- name: install demo-app on ec2 instance
+- name: install ruby-app on ec2 instance
   hosts: credstash-demo
   remote_user: ubuntu
   gather_facts: no
@@ -22,4 +22,4 @@
       changed_when: no
 
   roles:
-    - demo-app
+    - ruby-app

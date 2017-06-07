@@ -1,8 +1,8 @@
 
-- name: restart demo-app
+- name: restart ruby-app
   become: yes
   systemd:
-    name: demo-app
+    name: ruby-app
     state: restarted
     enabled: yes
     daemon_reload: yes

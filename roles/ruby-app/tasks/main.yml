@@ -26,26 +26,26 @@
   pip:
     name: credstash
 
-- name: copy demo-app.rb
+- name: copy ruby-app.rb
   copy:
-    src: files/demo-app.rb
+    src: files/ruby-app.rb
     dest: "{{ app_install_path }}"
     mode: 0700
   notify:
-    - restart demo-app
+    - restart ruby-app
 
-- name: copy demo-app service
+- name: copy ruby-app service
   become: yes
   template:
-    src: templates/demo-app.service.j2
+    src: templates/ruby-app.service.j2
     dest: "{{ app_service_path }}"
   notify:
-    - restart demo-app
+    - restart ruby-app
 
-- name: start/enable demo-app
+- name: start/enable ruby-app
   become: yes
   systemd:
-    name: demo-app
+    name: ruby-app
     state: started
     enabled: yes
     daemon_reload: yes
