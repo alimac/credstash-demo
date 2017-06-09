@@ -12,7 +12,7 @@ There is a cost for launching resources on AWS. Please read carefully to estimat
 - [DynamoDB Pricing](https://aws.amazon.com/dynamodb/pricing/)
 - [KMS Pricing](https://aws.amazon.com/kms/pricing/)
 
-## What do I need
+## What you need
 
 To run credstash-demo, you will need the following:
 
@@ -51,7 +51,7 @@ The first secret is fetched from an environment variable that gets set when we r
 
 The second secret is fetched directly from Credstash. If we update its value in Credstash, the application will automatically fetch its updated value.
 
-## How do I run it
+## How to run this demo
 
 In your terminal:
 
@@ -61,7 +61,7 @@ cd credstash-demo/
 ansible-playbook credstash-demo.yml
 ```
 
-If you want to get more insight into the tasks that Ansible is running, add the `-v` flag to increase verbosity (up to `-vvvv`).
+If you want to get more insight into the tasks that Ansible is running, add the `-v` flag to increase verbosity. You can go up to `-vvvv`.
 
 ## Variables
 
@@ -75,3 +75,13 @@ ansible-playbook credstash-demo.yml -e ec2_keypair=myKey -e ec2_instance_type=t2
 ```
 
 Or edit the `vars:` section of `credstash-demo.yml` playbook.
+
+In this demo, `credstash_secrets` list contains unencrypted secrets. This is purely for convenience and not recommended outside of testing this demo.
+
+## Author
+
+Alina Mackenzie
+
+## License
+
+Licensed under the MIT License. See the [LICENSE](LICENSE.md) file for more details.
