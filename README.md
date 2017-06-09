@@ -65,8 +65,10 @@ If you want to get more insight into the tasks that Ansible is running, add the 
 
 ## Variables
 
-- `ec2_keypair` - Name of EC2 public key you want to use for the instance. You must have the private key in your SSH agent. By default, Ansible will create and save a private key named `credstash-demo.pem`
-- `ec2_instance_type` - Set to *t2.nano* (smallest, cheapest instance) by default. If your AWS account is eligible for the free tier, set this to *t2.micro*.
+You can set the following optional variables:
+
+- `ec2_keypair` - Name of EC2 public key you want to use for the instance. By default, Ansible will create and save a private key named `credstash-demo.pem`
+- `ec2_instance_type` - By default set to **t2.nano** (smallest, cheapest instance). If your AWS account is eligible for the free tier, set this to **t2.micro**.
 
 You can pass the variables via command line:
 
