@@ -1,0 +1,37 @@
+---
+
+- name: terminate credstash-demo resources
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    region: "{{ lookup('ENV','AWS_DEFAULT_REGION') }}"
+    profile: "{{ lookup('ENV','AWS_DEFAULT_PROFILE') }}"
+
+  tasks:
+    - name: get ec2 remote facts
+      ec2_remote_facts:
+        profile: "{{ profile }}"
+        region: "{{ region }}"
+        filters:
+          "tag:Name": credstash-demo
+
+    - name: terminate credstash-demo ec2 instance
+      debug:
+        msg: "do it"
+
+    - name: delete credstash-demo security group
+      debug:
+        msg: "do it"
+
+    - name: delete credstash-demo profile
+      debug:
+        msg: "do it"
+
+    - name: delete credential-store dynamodb table
+      debug:
+        msg: "do it"
+
+    - name: delete credstash kms key
+      debug:
+        msg: "do it"
